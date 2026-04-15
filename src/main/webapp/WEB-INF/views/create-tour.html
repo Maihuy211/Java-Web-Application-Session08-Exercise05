@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/tour/create}" th:object="${tour}" method="post">
+
+    <!-- Tour Code -->
+    <div>
+        <label>Mã tour:</label>
+        <input type="text" th:field="*{tourCode}" />
+        <p th:errors="*{tourCode}" style="color:red"></p>
+    </div>
+
+    <!-- Adult Price -->
+    <div>
+        <label>Giá người lớn:</label>
+        <input type="number" th:field="*{adultPrice}" />
+        <p th:errors="*{adultPrice}" style="color:red"></p>
+    </div>
+
+    <!-- Child Price -->
+    <div>
+        <label>Giá trẻ em:</label>
+        <input type="number" th:field="*{childPrice}" />
+        <p th:errors="*{childPrice}" style="color:red"></p>
+    </div>
+
+    <!-- Start Date -->
+    <div>
+        <label>Ngày khởi hành:</label>
+        <input type="date" th:field="*{startDate}" />
+        <p th:errors="*{startDate}" style="color:red"></p>
+    </div>
+
+    <!-- End Date -->
+    <div>
+        <label>Ngày kết thúc:</label>
+        <input type="date" th:field="*{endDate}" />
+        <p th:errors="*{endDate}" style="color:red"></p>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

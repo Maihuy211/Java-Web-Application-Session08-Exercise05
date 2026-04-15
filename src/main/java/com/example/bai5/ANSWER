@@ -1,0 +1,19 @@
+Input: withdrawAmount (kiểu Long hoặc Integer)
+Output:
+Hợp lệ → cho phép rút tiền
+Không hợp lệ → trả về lỗi validation
+
+Giải pháp
+Tạo Custom Annotation: @MultipleOfTenThousand
+Kết hợp thêm:
+@NotNull → chặn null
+@Min(50000) → chặn < 50k
+
+Viết mã giả (Pseudocode)
+ if value == null:
+    return true  // để @NotNull xử lý
+ if value < 50000:
+     return false
+ if value % 10000 != 0:
+     return false
+ return true
