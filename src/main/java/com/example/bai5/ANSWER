@@ -1,19 +1,34 @@
-Input: withdrawAmount (kiểu Long hoặc Integer)
-Output:
-Hợp lệ → cho phép rút tiền
-Không hợp lệ → trả về lỗi validation
+Mapping Annotation
+tourCode:
+@NotBlank, @Pattern → field-level (chuẩn)
+Giá tiền:
+@NotNull, @Min(1) → field-level (chuẩn)
+child ≤ adult → class-level (custom @ValidPrice)
+Ngày:
+@NotNull, @FutureOrPresent → field-level (chuẩn)
+end > start → class-level (custom @ValidDateRange)
+Thymeleaf:
+th:object, th:field, th:errors → giữ data + hiện lỗi
 
-Giải pháp
-Tạo Custom Annotation: @MultipleOfTenThousand
-Kết hợp thêm:
-@NotNull → chặn null
-@Min(50000) → chặn < 50k
 
-Viết mã giả (Pseudocode)
- if value == null:
-    return true  // để @NotNull xử lý
- if value < 50000:
-     return false
- if value % 10000 != 0:
-     return false
- return true
+Kịch bản Test rủi ro
+Case 1: Ngày sai logic
+Input:
+startDate = 2026-05-10, endDate = 2026-05-01
+Vấn đề: Ngày kết thúc < ngày bắt đầu
+Xử lý:
+@ValidDateRange chặn → trả lỗi vào BindingResult → không crash
+
+Case 2: Giá trẻ em > người lớn
+Input:
+adultPrice = 500, childPrice = 800
+Vấn đề: Sai nghiệp vụ
+Xử lý:
+@ValidPrice chặn → gán lỗi vào field childPrice → không lưu DB
+
+Case 3: Mã tour sai format
+Input:
+tourCode = abc123
+Vấn đề: Không đúng chuẩn VN_/INT_
+Xử lý:
+@Pattern chặn → báo lỗi → không xử lý tiếp
